@@ -2,10 +2,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 path = require('path');
 
 module.exports = {
-  entry: {
-    js: path.join(__dirname, '/src/main.js'),
-    css: path.join(__dirname, '/src/main.css'),
-  },
+  entry: [ path.join(__dirname, '/src/main.js'), path.join(__dirname, '/src/main.css') ],
   output: { path: path.join(__dirname, '/public'), filename: 'bundle.js' },
   module: {
     loaders: [
@@ -15,7 +12,7 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        text: /\.css$/,
+        test: /\.css$/,
         loader: ExtractTextPlugin.extract(
           'css-loader!postcss-loader'
         ),
@@ -30,9 +27,6 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('bundle.css'),
-  ],
-  postcss: [
-    require('postcss-easy-import')({ glob: true }),
   ],
   devtool: 'source-map',
 };
